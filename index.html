@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Atelier Obscura | Archive Collection</title>
+  <meta name="description" content="A monochrome luxury archive of retired Easter egg editions. Join the wait list for future releases." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #050505;
+      --bg-soft: #0b0b0b;
+      --panel: rgba(255,255,255,0.04);
+      --line: rgba(255,255,255,0.14);
+      --text: #f3f3f1;
+      --muted: rgba(243,243,241,0.72);
+      --soft: rgba(243,243,241,0.48);
+      --shadow: 0 24px 80px rgba(0,0,0,0.45);
+      --radius: 28px;
+      --max: 1320px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'Inter', system-ui, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,0.06), transparent 32%),
+        radial-gradient(circle at 80% 20%, rgba(255,255,255,0.04), transparent 24%),
+        linear-gradient(180deg, #070707 0%, #030303 100%);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    img { display:block; width:100%; height:auto; }
+    a { color: inherit; text-decoration: none; }
+    .shell { width: min(calc(100% - 40px), var(--max)); margin: 0 auto; }
+    .eyebrow {
+      display: inline-block;
+      font-size: 0.78rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--soft);
+    }
+    h1, h2, h3 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      line-height: 0.95;
+      margin: 0;
+    }
+    p { margin: 0; color: var(--muted); }
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(18px);
+      background: rgba(5,5,5,0.72);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .nav {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 0.84rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      color: var(--soft);
+      font-size: 0.92rem;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .btn {
+      appearance: none;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: transparent;
+      color: var(--text);
+      border-radius: 999px;
+      padding: 14px 22px;
+      font-size: 0.92rem;
+      font-weight: 500;
+      transition: 180ms ease;
+      cursor: pointer;
+    }
+    .btn:hover {
+      transform: translateY(-1px);
+      border-color: rgba(255,255,255,0.32);
+      background: rgba(255,255,255,0.04);
+    }
+    .btn-primary {
+      background: #ffffff;
+      color: #060606;
+      border-color: #ffffff;
+    }
+    .btn-primary:hover {
+      background: #e8e8e4;
+      border-color: #e8e8e4;
+    }
+    .hero { padding: 90px 0 48px; }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 34px;
+      align-items: stretch;
+    }
+    .hero-copy, .hero-card {
+      border: 1px solid var(--line);
+      border-radius: 32px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+      box-shadow: var(--shadow);
+    }
+    .hero-copy {
+      padding: 52px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 620px;
+    }
+    .hero h1 {
+      font-size: clamp(3.8rem, 8vw, 7.2rem);
+      max-width: 10ch;
+      margin-top: 14px;
+    }
+    .hero-lead {
+      max-width: 56ch;
+      font-size: 1.04rem;
+      margin-top: 22px;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 34px;
+    }
+    .hero-meta {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 44px;
+      padding-top: 28px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .meta-label {
+      display: block;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--soft);
+      margin-bottom: 6px;
+    }
+    .meta-value { font-size: 1rem; color: var(--text); }
+    .hero-card {
+      overflow: hidden;
+      position: relative;
+      min-height: 620px;
+      background:
+        radial-gradient(circle at top, rgba(255,255,255,0.08), transparent 26%),
+        linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+    }
+    .hero-card::before {
+      content: "Archive 2026";
+      position: absolute;
+      top: 28px;
+      right: 28px;
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      z-index: 2;
+    }
+    .hero-image {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,0.05), rgba(0,0,0,0.64)),
+        url('images/hero-nocturne.png') center/cover no-repeat;
+      filter: grayscale(100%) contrast(1.05);
+      transform: scale(1.02);
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: auto 0 0 0;
+      padding: 36px;
+      background: linear-gradient(180deg, transparent, rgba(0,0,0,0.72));
+      z-index: 1;
+    }
+    .hero-overlay h2 { font-size: 2.35rem; margin-bottom: 10px; }
+    .section { padding: 48px 0; }
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 26px;
+    }
+    .section-head h2 { font-size: clamp(2.2rem, 4vw, 4rem); }
+    .section-head p { max-width: 46ch; }
+    .archive-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 22px;
+    }
+    .card {
+      grid-column: span 4;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      overflow: hidden;
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+      box-shadow: var(--shadow);
+      transition: transform 180ms ease, border-color 180ms ease;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255,255,255,0.24);
+    }
+    .card-media {
+      aspect-ratio: 4 / 5;
+      overflow: hidden;
+      background: #111;
+    }
+    .card-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(100%);
+    }
+    .card-body { padding: 24px 24px 26px; }
+    .card-topline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+      color: var(--soft);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+    }
+    .status {
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 999px;
+      padding: 7px 10px;
+      white-space: nowrap;
+    }
+    .card h3 { font-size: 2.15rem; margin-bottom: 10px; }
+    .card p { min-height: 72px; }
+    .card-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+    .tag {
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--soft);
+      font-size: 0.82rem;
+    }
+    .manifesto {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+    }
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.015));
+      padding: 34px;
+      box-shadow: var(--shadow);
+    }
+    .panel h3 { font-size: 2rem; margin-bottom: 14px; }
+    .list { display: grid; gap: 18px; margin-top: 18px; }
+    .list-item {
+      padding-top: 18px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .list-item strong {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 500;
+      color: var(--text);
+    }
+    .waitlist {
+      padding: 30px;
+      border: 1px solid var(--line);
+      border-radius: 32px;
+      background:
+        radial-gradient(circle at top right, rgba(255,255,255,0.06), transparent 24%),
+        linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.015));
+      box-shadow: var(--shadow);
+    }
+    .waitlist-grid {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 30px;
+      align-items: stretch;
+    }
+    .waitlist-copy {
+      padding: 18px 8px 18px 8px;
+    }
+    .waitlist-copy h2 {
+      font-size: clamp(2.5rem, 4vw, 4.2rem);
+      margin-top: 10px;
+      margin-bottom: 16px;
+    }
+    .waitlist-form {
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 24px;
+      padding: 24px;
+      background: rgba(255,255,255,0.03);
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .field { display: grid; gap: 8px; }
+    .field.full { grid-column: 1 / -1; }
+    label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--soft);
+    }
+    input, select, textarea {
+      width: 100%;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 16px;
+      background: rgba(255,255,255,0.02);
+      color: var(--text);
+      padding: 15px 16px;
+      font: inherit;
+      outline: none;
+      transition: 180ms ease;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: rgba(255,255,255,0.3);
+      background: rgba(255,255,255,0.04);
+    }
+    textarea { min-height: 110px; resize: vertical; }
+    .fine { margin-top: 14px; font-size: 0.82rem; color: var(--soft); }
+    .form-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-top: 18px;
+      flex-wrap: wrap;
+    }
+    .success {
+      display: none;
+      margin-top: 18px;
+      padding: 14px 16px;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 16px;
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+    }
+    .success.show { display: block; }
+    .footer {
+      padding: 22px 0 50px;
+      color: var(--soft);
+      font-size: 0.9rem;
+    }
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding-top: 22px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    @media (max-width: 1100px) {
+      .hero-grid, .manifesto, .waitlist-grid { grid-template-columns: 1fr; }
+      .hero-copy, .hero-card { min-height: auto; }
+      .hero-card { min-height: 540px; }
+      .card { grid-column: span 6; }
+    }
+    @media (max-width: 760px) {
+      .shell { width: min(calc(100% - 24px), var(--max)); }
+      .nav { min-height: 70px; }
+      .nav-links { display: none; }
+      .hero { padding-top: 42px; }
+      .hero-copy { padding: 28px; border-radius: 24px; }
+      .hero-card, .waitlist, .panel, .card { border-radius: 24px; }
+      .hero-meta, .form-grid { grid-template-columns: 1fr; }
+      .card { grid-column: 1 / -1; }
+      .section-head, .footer-inner, .form-actions { display: grid; gap: 14px; }
+      .hero-card { min-height: 420px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="shell nav">
+      <a href="#top" class="brand" aria-label="Atelier Obscura home">
+        <span class="brand-mark">A</span>
+        <span>Atelier Obscura</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#archive">Archive</a>
+        <a href="#philosophy">Philosophy</a>
+        <a href="#waitlist">Wait list</a>
+      </nav>
+      <a class="btn" href="#waitlist">Join wait list</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="shell hero-grid">
+        <div class="hero-copy">
+          <div>
+            <span class="eyebrow">Archived Collection</span>
+            <h1>Confectionery as object.</h1>
+            <p class="hero-lead">
+              A private study in form, texture and indulgence. Each Easter egg in the Archive Collection was released in strictly limited numbers and is now retired. Nothing here is currently available to purchase. Future releases will be offered by invitation to the wait list first.
+            </p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#waitlist">Request priority access</a>
+              <a class="btn" href="#archive">View retired pieces</a>
+            </div>
+          </div>
+
+          <div class="hero-meta">
+            <div>
+              <span class="meta-label">Edition status</span>
+              <span class="meta-value">Fully retired</span>
+            </div>
+            <div>
+              <span class="meta-label">Aesthetic</span>
+              <span class="meta-value">Monochrome luxury</span>
+            </div>
+            <div>
+              <span class="meta-label">Access</span>
+              <span class="meta-value">Wait list only</span>
+            </div>
+          </div>
+        </div>
+
+        <aside class="hero-card" aria-label="Featured archive piece">
+          <div class="hero-image"></div>
+          <div class="hero-overlay">
+            <span class="eyebrow">Featured study</span>
+            <h2>Nocturne Spiral</h2>
+            <p>A darker sculptural silhouette presented as an archival object rather than a seasonal confection.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="archive">
+      <div class="shell">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">Previously released</span>
+            <h2>The archive</h2>
+          </div>
+          <p>
+            Every piece below has now sold through and will not be remade in its original form. The archive exists to document the collection language and to signal what may influence future releases.
+          </p>
+        </div>
+
+        <div class="archive-grid">
+          <article class="card">
+            <div class="card-media"><img src="images/coral-study.png" alt="Coral Study Easter egg" /></div>
+            <div class="card-body">
+              <div class="card-topline">
+                <span>Edition I</span>
+                <span class="status">Retired</span>
+              </div>
+              <h3>Coral Study</h3>
+              <p>A branching relief inspired by oceanic coral forms, rendered in dark tones with a sculptural matte finish.</p>
+              <div class="card-meta">
+                <span class="tag">Dark profile</span>
+                <span class="tag">Organic texture</span>
+                <span class="tag">Archive only</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-media"><img src="images/feather-form.png" alt="Feather Form Easter egg" /></div>
+            <div class="card-body">
+              <div class="card-topline">
+                <span>Edition II</span>
+                <span class="status">Retired</span>
+              </div>
+              <h3>Feather Form</h3>
+              <p>Layered, directional plumage with fine sculpted veining. Softly reflective and deliberately restrained.</p>
+              <div class="card-meta">
+                <span class="tag">Layered shell</span>
+                <span class="tag">Refined detail</span>
+                <span class="tag">Archive only</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-media"><img src="images/cellular-no1.png" alt="Cellular No. 01 Easter egg" /></div>
+            <div class="card-body">
+              <div class="card-topline">
+                <span>Edition III</span>
+                <span class="status">Retired</span>
+              </div>
+              <h3>Cellular No. 01</h3>
+              <p>An ultra-geometric surface based on irregular cellular partitions, balancing gloss, void and shadow.</p>
+              <div class="card-meta">
+                <span class="tag">Voronoi shell</span>
+                <span class="tag">Parametric feel</span>
+                <span class="tag">Archive only</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-media"><img src="images/tentacle-nocturne.png" alt="Tentacle Nocturne Easter egg" /></div>
+            <div class="card-body">
+              <div class="card-topline">
+                <span>Edition IV</span>
+                <span class="status">Retired</span>
+              </div>
+              <h3>Tentacle Nocturne</h3>
+              <p>A darker composition with coiling relief and heavy shadow, conceived as edible gothic sculpture.</p>
+              <div class="card-meta">
+                <span class="tag">Gothic tone</span>
+                <span class="tag">Deep roast notes</span>
+                <span class="tag">Archive only</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-media"><img src="images/fractal-vector.png" alt="Fractal Vector Easter egg" /></div>
+            <div class="card-body">
+              <div class="card-topline">
+                <span>Edition V</span>
+                <span class="status">Retired</span>
+              </div>
+              <h3>Fractal Vector</h3>
+              <p>Angular tessellation, crisp edges and gallery-grade symmetry. A study in mathematical repetition and restraint.</p>
+              <div class="card-meta">
+                <span class="tag">Architectural</span>
+                <span class="tag">Precision moulded</span>
+                <span class="tag">Archive only</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-media"><img src="images/hero-nocturne.png" alt="Nocturne Spiral Easter egg" /></div>
+            <div class="card-body">
+              <div class="card-topline">
+                <span>Edition VI</span>
+                <span class="status">Retired</span>
+              </div>
+              <h3>Nocturne Spiral</h3>
+              <p>An unsettling study of intertwined dark chocolate forms. Monochrome, severe and intentionally disquieting.</p>
+              <div class="card-meta">
+                <span class="tag">Unsettling</span>
+                <span class="tag">Collector piece</span>
+                <span class="tag">Archive only</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="philosophy">
+      <div class="shell manifesto">
+        <div class="panel">
+          <span class="eyebrow">Collection philosophy</span>
+          <h3>Designed to be desired, not restocked.</h3>
+          <p>
+            This collection is built around scarcity, silhouette and memory. Pieces are released in small runs, documented once, then retired. The result is not a catalogue but an archive, where absence becomes part of the luxury.
+          </p>
+        </div>
+
+        <div class="panel">
+          <span class="eyebrow">What the wait list gives you</span>
+          <div class="list">
+            <div class="list-item">
+              <strong>First notice of future releases</strong>
+              <p>Invitation to view new work before any public announcement.</p>
+            </div>
+            <div class="list-item">
+              <strong>Access to limited allocations</strong>
+              <p>Selected subscribers may receive priority access when release quantities are constrained.</p>
+            </div>
+            <div class="list-item">
+              <strong>Studio notes and archive previews</strong>
+              <p>Occasional correspondence on new textures, concepts and private release directions.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="waitlist">
+      <div class="shell waitlist">
+        <div class="waitlist-grid">
+          <div class="waitlist-copy">
+            <span class="eyebrow">Private access</span>
+            <h2>Join the wait list.</h2>
+            <p>
+              No products are currently available. Register your interest to receive notice of future releases, archival previews and limited invitation windows.
+            </p>
+            <p style="margin-top:16px;">
+              This form is configured for front-end capture only. Connect it to your CRM, ESP or wait-list workflow of choice when ready.
+            </p>
+          </div>
+
+          <form class="waitlist-form" id="waitlistForm">
+            <div class="form-grid">
+              <div class="field">
+                <label for="firstName">First name</label>
+                <input id="firstName" name="firstName" type="text" placeholder="Jamie" required />
+              </div>
+              <div class="field">
+                <label for="lastName">Last name</label>
+                <input id="lastName" name="lastName" type="text" placeholder="Smith" required />
+              </div>
+              <div class="field full">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" placeholder="name@company.com" required />
+              </div>
+              <div class="field">
+                <label for="interest">Primary interest</label>
+                <select id="interest" name="interest">
+                  <option value="Archive access">Archive access</option>
+                  <option value="Future releases">Future releases</option>
+                  <option value="Private commissions">Private commissions</option>
+                  <option value="Collector updates">Collector updates</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="region">Region</label>
+                <select id="region" name="region">
+                  <option value="UK">UK</option>
+                  <option value="Europe">Europe</option>
+                  <option value="North America">North America</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <div class="field full">
+                <label for="notes">Notes</label>
+                <textarea id="notes" name="notes" placeholder="Optional. Favourite textures, commission interest, or release preferences."></textarea>
+              </div>
+            </div>
+
+            <p class="fine">By joining the wait list, you agree to receive occasional release updates and collection news.</p>
+
+            <div class="form-actions">
+              <button class="btn btn-primary" type="submit">Join wait list</button>
+              <span class="fine">No payment. No current stock. Invitation updates only.</span>
+            </div>
+
+            <div class="success" id="successMessage">
+              Thank you. Your interest has been recorded for future release updates.
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="shell footer-inner">
+      <span>Atelier Obscura. Archive Collection.</span>
+      <span>GitHub Pages-ready static site.</span>
+    </div>
+  </footer>
+
+  <script>
+    const form = document.getElementById('waitlistForm');
+    const successMessage = document.getElementById('successMessage');
+
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+      const data = Object.fromEntries(new FormData(form).entries());
+      console.log('Wait list submission:', data);
+      successMessage.classList.add('show');
+      form.reset();
+      successMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+  </script>
+</body>
+</html>
